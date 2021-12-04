@@ -117,26 +117,6 @@ namespace Day4
 
             }
 
-            /* Testing
-            Boards.Add(new Board(
-                new int[,] { {3, 1, 2}, {5, 1 , 3}, {4, 2, 2} },
-                new bool[,] { { false, false, false }, { true, true, true }, { false, false, false } })                
-                ); 
-            Boards.Add(new Board(
-                new int[,] { { 3, 1, 2 }, { 5, 1, 3 }, { 4, 2, 2 } },
-                new bool[,] { { false, false, false }, { false, false, false }, { false, false, false } })
-                );
-            Boards.Add(new Board(
-               new int[,] { { 3, 1, 2 }, { 5, 1, 3 }, { 4, 2, 2 } },
-               new bool[,] { { true, false, false }, { true, false, false }, { true, false, false } })
-               );
-
-            for (int i = 0; i < Boards.Count; i++)
-            {
-                Console.WriteLine(IsBoardComplete(Boards[i]));
-            }
-            */
-
             int WinningBoardScore = 0;
 
             for (int i = 0; i < DrawnValues.Count; i++)
