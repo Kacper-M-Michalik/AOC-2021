@@ -89,6 +89,51 @@ namespace Day8
             string BottomRight = "";
             string BottomBar = "";
 
+            string DisplayLookup(string Value)
+            {
+                if (Value.Contains(TopBar) && Value.Contains(TopLeft) && Value.Contains(TopRight) && Value.Contains(MiddleBar) && Value.Contains(BottomLeft) && Value.Contains(BottomRight) && Value.Contains(BottomBar)) 
+                {
+                    return "8";
+                }
+                if (Value.Contains(TopBar) && Value.Contains(TopLeft) && Value.Contains(TopRight) && Value.Contains(MiddleBar) && Value.Contains(BottomRight) && Value.Contains(BottomBar))
+                {
+                    return "9";
+                }
+                if (Value.Contains(TopBar) && Value.Contains(TopLeft) && Value.Contains(MiddleBar) && Value.Contains(BottomLeft) && Value.Contains(BottomRight) && Value.Contains(BottomBar))
+                {
+                    return "6";
+                }
+                if (Value.Contains(TopBar) && Value.Contains(TopLeft) && Value.Contains(TopRight) && Value.Contains(BottomLeft) && Value.Contains(BottomRight) && Value.Contains(BottomBar))
+                {
+                    return "0";
+                }
+                if (Value.Contains(TopBar) && Value.Contains(TopRight) && Value.Contains(MiddleBar) && Value.Contains(BottomLeft) && Value.Contains(BottomBar))
+                {
+                    return "2";
+                }
+                if (Value.Contains(TopBar) && Value.Contains(TopLeft) && Value.Contains(MiddleBar) && Value.Contains(BottomRight) && Value.Contains(BottomBar))
+                {
+                    return "5";
+                }
+                if (Value.Contains(TopBar) && Value.Contains(TopRight) && Value.Contains(MiddleBar) && Value.Contains(BottomRight) && Value.Contains(BottomBar))
+                {
+                    return "3";
+                }
+                if (Value.Contains(TopLeft) && Value.Contains(TopRight) && Value.Contains(MiddleBar) && Value.Contains(BottomRight))
+                {
+                    return "4";
+                }
+                if (Value.Contains(TopBar) && Value.Contains(TopRight) && Value.Contains(BottomRight))
+                {
+                    return "7";
+                }
+                if (Value.Contains(TopRight) && Value.Contains(BottomRight))
+                {
+                    return "1";
+                }
+                throw new Exception("Bad Value");
+            }
+
             int TotalSum = 0;
             for (int i = 0; i < Data.Length; i++)
             {
@@ -149,16 +194,14 @@ namespace Day8
                 TopRight = GetDifference(Five, One + TopBar + TopLeft + MiddleBar + BottomBar)[0].ToString();
                 BottomRight = GetDifference(One, TopRight)[0].ToString();
 
-                //Create lookup table
-
-
-                int Sum = 0;
-                for (int j = 0; j < Input.Length; j++)
+                string[] DisplayInput = Data[i].Split(" | ")[1].Split(' ');
+                string Display = "";
+                for (int j = 0; j < DisplayInput.Length; j++)
                 {
-                    //Use here
+                    Display += DisplayLookup(DisplayInput[j]);
                 }
 
-                TotalSum += Sum;
+                TotalSum += Convert.ToInt32(Display);
             }
 
             Console.WriteLine(TotalSum);
