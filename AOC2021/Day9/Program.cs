@@ -31,7 +31,7 @@ namespace Day9
                 {
                     bool IsLowest = true;
                     if (x > 0 && Vents[x - 1, y] <= Vents[x, y]) IsLowest = false;
-                    if (y > 0 && Vents[x, y - 1] <= Vents[x, y]) IsLowest = false; 
+                    if (y > 0 && Vents[x, y - 1] <= Vents[x, y]) IsLowest = false;
                     if (x < Vents.GetLength(0) - 1 && Vents[x + 1, y] <= Vents[x, y]) IsLowest = false;
                     if (y < Vents.GetLength(1) - 1 && Vents[x, y + 1] <= Vents[x, y]) IsLowest = false;
 
@@ -60,12 +60,12 @@ namespace Day9
                 for (int j = 0; j < Data[i].Length; j++)
                 {
                     Vents[j, i] = Convert.ToInt32(Data[i][j].ToString());
-                    ActiveData[j, i] = true;
+                    if (Vents[j, i] != 9) ActiveData[j, i] = true;
+                    else ActiveData[j, i] = false;
                 }
             }
 
-            int X = 0, Y = 0;
-            List<List<Position>> BasinList = new List<List<Position>>();
+            List<int> BasinList = new List<int>();
 
             for (int y = 0; y < Vents.GetLength(1); y++)
             {
@@ -73,24 +73,37 @@ namespace Day9
                 {
                     if (ActiveData[x, y])
                     {
-                        List<Position> Basin = FloodFill(x, y);
+                        BasinList.Add(FloodFill(x, y, new IntPointer(0)).Value);
                     }
                 }
             }
 
-            Console.WriteLine();
-            Console.ReadLine();
+            BasinList.Sort();
+            Console.WriteLine(BasinList[BasinList.Count-1]* BasinList[BasinList.Count - 2]* BasinList[BasinList.Count - 3]);
+            Console.ReadLine();            
+
+            IntPointer FloodFill(int X, int Y, IntPointer Total)
+            {
+                Total.Value++;
+                ActiveData[X, Y] = false;
+
+                if (X > 0 && ActiveData[X - 1, Y]) FloodFill(X - 1, Y, Total);
+                if (Y > 0 && ActiveData[X, Y - 1]) FloodFill(X, Y - 1, Total);
+                if (X < Vents.GetLength(0) - 1 && ActiveData[X + 1, Y]) FloodFill(X + 1, Y, Total);
+                if (Y < Vents.GetLength(1) - 1 && ActiveData[X, Y + 1]) FloodFill(X, Y + 1, Total);
+
+                return Total;
+            }
         }
 
-        public class Position
+        public class IntPointer
         {
-            public int X;
-            public int Y;
-        }
-
-        public static List<Position> FloodFill(int X, int Y)
-        {
-            throw new Exception();
+            public int Value;
+            public IntPointer(int NewInt)
+            {
+                Value = NewInt;
+            }
         }
     }
 }
+
