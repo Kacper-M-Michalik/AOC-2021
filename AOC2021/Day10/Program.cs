@@ -137,8 +137,9 @@ namespace Day10
                 }
                 Scores.Add(AutoCompleteScore);
             }
+
             Scores.Sort();
-            Console.WriteLine(Scores[ (int)Math.Floor(Scores.Count * 0.5f) ]);
+            Console.WriteLine(Scores[(int)Math.Floor(Scores.Count * 0.5f)]);
             Console.ReadKey();
 
         }
