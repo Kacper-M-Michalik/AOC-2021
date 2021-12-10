@@ -88,10 +88,57 @@ namespace Day10
 
         static void Part2()
         {
-            string[] Data = System.IO.File.ReadAllLines("Data.txt");
+            List<string> Data = new List<string>(System.IO.File.ReadAllLines("Data.txt"));
+            Dictionary<char, int> AutoCompleteScoreLookup = new Dictionary<char, int>() {
+                {'(', 1},
+                {'[', 2},
+                {'{', 3},
+                {'<', 4}
+            };
 
-            int AutoCompleteScore = 0;
-            Console.WriteLine(AutoCompleteScore);
+            List<string> Incomplete = new List<string>();
+            for (int i = 0; i < Data.Count; i++)
+            {
+                bool ErrorReached = false;
+                bool WasRemoved = true;
+                while (!ErrorReached && WasRemoved)
+                {
+                    WasRemoved = false;
+                    for (int j = 0; j < Data[i].Length - 1; j++)
+                    {
+                        InverseResult Comparison = IsInverse(Data[i][j], Data[i][j + 1]);
+
+                        if (Comparison.Result)
+                        {
+                            WasRemoved = true;
+                            Data[i] = Data[i].Remove(j, 2);
+                        }
+                        else if (Comparison.PossiblePair)
+                        {
+                            ErrorReached = true;
+                        }
+                    }
+                }
+                if (!ErrorReached)
+                {
+                    Incomplete.Add(Data[i]);
+                }
+            }
+
+            List<long> Scores = new List<long>();
+            for (int i = 0; i < Incomplete.Count; i++)
+            {
+                long AutoCompleteScore = 0;               
+
+                for (int j = Incomplete[i].Length-1; j > -1; j--)
+                {
+                    AutoCompleteScore *= 5;
+                    AutoCompleteScore += AutoCompleteScoreLookup[Incomplete[i][j]];
+                }
+                Scores.Add(AutoCompleteScore);
+            }
+            Scores.Sort();
+            Console.WriteLine(Scores[ (int)Math.Floor(Scores.Count * 0.5f) ]);
             Console.ReadKey();
 
         }
