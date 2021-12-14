@@ -116,6 +116,7 @@ namespace Day14
 
         static void Part2()
         {
+            DateTime Start = DateTime.UtcNow;
             string[] Lines = System.IO.File.ReadAllLines("Data.txt");
 
             Dictionary<string, long> PairCount = new Dictionary<string, long>();
@@ -214,7 +215,9 @@ namespace Day14
                 if (TrueCount < SmallestCount) SmallestCount = TrueCount;
             }
 
+            DateTime End = DateTime.UtcNow;
             Console.WriteLine(LargestCount - SmallestCount);
+            Console.WriteLine("MS: "+(End.Millisecond - Start.Millisecond).ToString());
         }
     }
 }
