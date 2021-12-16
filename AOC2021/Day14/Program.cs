@@ -86,8 +86,8 @@ namespace Day14
                 if (Pair.Value > LargestCount) LargestCount = Pair.Value;
                 if (Pair.Value < SmallestCount) SmallestCount = Pair.Value;
             }
-            //Answer within range +-1
-            Console.Write(Math.Ceiling((LargestCount-SmallestCount)*0.5f));
+            //WE havent taken into account that pairs overlap - as such halfing and taking away 1 gave right anwer but this was pure luck, have yet to figure out which pairs are overcounted.
+            Console.WriteLine(Math.Ceiling((LargestCount-SmallestCount)*0.5f));
         }
         static void Part2()
         {
@@ -159,13 +159,21 @@ namespace Day14
                 }
             }
 
+            CharCount[Lines[0][0]]++;
+            CharCount[Lines[0][Lines[0].Length - 1]]++;
+
+            foreach (KeyValuePair<char, long> Pair in CharCount)
+            {
+                CharCount[Pair.Key] = (long)(CharCount[Pair.Key]*0.5f);
+            }
+
             foreach (KeyValuePair<char, long> Pair in CharCount)
             {
                 if (Pair.Value > LargestCount) LargestCount = Pair.Value;
                 if (Pair.Value < SmallestCount) SmallestCount = Pair.Value;
             }
-            //Answer within range +-1
-            Console.Write(Math.Ceiling((LargestCount - SmallestCount) * 0.5f));
+
+            Console.WriteLine(LargestCount-SmallestCount);
         }
     }
 }
