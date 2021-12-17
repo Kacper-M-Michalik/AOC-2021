@@ -10,7 +10,7 @@ namespace Day16
     public class Packet
     {
         string ReadBuffer;
-        int ReadPointerPosition;
+        public int ReadPointerPosition;
 
         public Packet(string Data)
         {
@@ -23,16 +23,16 @@ namespace Day16
             }
         }
 
-        public int ReadInt3(bool MovePointer = true)
+        public long ReadInt3(bool MovePointer = true)
         {
-            int Result = Convert.ToInt32(ReadBuffer.Substring(ReadPointerPosition, 3), 2);
+            long Result = Convert.ToInt64(ReadBuffer.Substring(ReadPointerPosition, 3), 2);
             if (MovePointer) ReadPointerPosition += 3;
             return Result;
         }
 
-        public int ReadIntCustom(int Length, bool MovePointer = true)
+        public long ReadIntCustom(int Length, bool MovePointer = true)
         {
-            int Result = Convert.ToInt32(ReadBuffer.Substring(ReadPointerPosition, Length), 2);
+            long Result = Convert.ToInt64(ReadBuffer.Substring(ReadPointerPosition, Length), 2);
             if (MovePointer) ReadPointerPosition += Length;
             return Result;
         }
@@ -44,12 +44,7 @@ namespace Day16
             return Result;
         }
 
-        public void ReadPacket()
-        {
-
-        }
-
-        public int ReadLiteral()
+        public long ReadLiteral()
         {
             string Result = "";
             bool EndReached = false;
@@ -59,7 +54,7 @@ namespace Day16
                 Result += CurrentChunk.Substring(1);
                 if (CurrentChunk[0] == '0') EndReached = true;
             }
-            return Convert.ToInt32(Result, 2);
+            return Convert.ToInt64(Result, 2);
         }
     }
 }
